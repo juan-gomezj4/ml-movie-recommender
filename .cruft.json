@@ -1,0 +1,34 @@
+{
+  "template": "https://github.com/JoseRZapata/data-science-project-template",
+  "commit": "7b3335a6b28688ae8b4ecd0411e13b9e91a2a685",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "ml-movie-recommender",
+      "repo_name": "ml-movie-recommender",
+      "github_username": "juan-gomezj4",
+      "author_name": "UPB-MLOps",
+      "author_email": "jgomezja@unal.edu.co",
+      "description": "Content-based movie recommender using public movie API. It shows similar movies to the ones you like.",
+      "compatible_python_versions": "3.11",
+      "mkdocs": true,
+      "codecov": true,
+      "license": "Not open source",
+      "_copy_without_render": [
+        ".code_quality/*",
+        ".vscode/*",
+        "config/*",
+        "data/*",
+        "src/*",
+        "tests/*",
+        ".editorconfig",
+        ".pre-commit-config.yaml",
+        "codecov.yaml",
+        "docs/*"
+      ],
+      "_template": "https://github.com/JoseRZapata/data-science-project-template",
+      "_commit": "7b3335a6b28688ae8b4ecd0411e13b9e91a2a685"
+    }
+  },
+  "directory": null
+}

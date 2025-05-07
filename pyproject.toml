@@ -1,0 +1,60 @@
+[project]
+name = "ml-movie-recommender"
+version = "0.1.0"
+description = "Content-based movie recommender using public movie API. It shows similar movies to the ones you like."
+authors = [
+    "UPB-MLOps <jgomezja@unal.edu.co>",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+
+dependencies = [
+
+]
+
+[project.urls]
+documentation = "https://juan-gomezj4.github.io/ml-movie-recommender"
+repository = "https://github.com/juan-gomezj4/ml-movie-recommender"
+
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0", # Code linting and formatting
+    "pytest>=8.3.5", # Testing framework
+    "pytest-cookies>=0.7.0",
+    "pytest-cov>=6.1.1",
+    "cruft[pyproject]>=2.15.0",# Automated Cookiecutter template synchronization
+]
+
+#
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.5.49",
+    "mkdocstrings[python]>=0.28.1",
+    "pymdown-extensions>=10.14.3",
+]
+#
+
+[tool.uv]
+package = false
+default-groups = [
+    "dev",
+#
+    "docs",
+#
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.paths]
+source = ["src/"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["**/__init__.py"]
