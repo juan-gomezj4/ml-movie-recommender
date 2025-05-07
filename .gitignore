@@ -95,7 +95,6 @@ docs/_build/
 target/
 
 # Pyenv / pipenv / poetry
-.python-version
 Pipfile.lock
 poetry.lock
 .pdm.toml
