@@ -1,0 +1,7 @@
+## API TMDB parameters
+api:
+  headers:
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YTYxOGZmMTA1YWE2OTAwODQzMTFlZWI1NzEwMjk2NCIsIm5iZiI6MTc0NjYzMDg2MC4xNjcsInN1YiI6IjY4MWI3OGNjYmM0MjUwZDgzOTg1MGEzNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0qkfx1kPvWKzK0zZ-IY7M6Mp9pvPACCedEeIJ7iTNUE"
+    accept: "application/json"
+  timeout: 10
+  http_ok: 200

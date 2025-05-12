@@ -29,6 +29,7 @@ dev = [
     "pandas>=2.2.3",
     "pyarrow>=20.0.0",
     "loguru>=0.7.3",
+    "omegaconf>=2.3.0",
 ]
 
 #
