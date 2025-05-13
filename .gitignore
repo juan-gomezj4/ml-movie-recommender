@@ -182,7 +182,7 @@ outputs/
 # ===========================
 # DATA folder exclusions
 # ===========================
-data/**
-!data/**/
-!data/README.md
-!.gitkeep
+# data/**
+# !data/**/
+# !data/README.md
+# !.gitkeep

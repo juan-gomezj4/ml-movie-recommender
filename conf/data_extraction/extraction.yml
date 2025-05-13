@@ -1,0 +1,7 @@
+## API TMDB parameters
+api:
+  headers:
+    Authorization: "Bearer ${oc.env:TMDB_TOKEN}"
+    accept: "application/json"
+  timeout: 10
+  http_ok: 200
