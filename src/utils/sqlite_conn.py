@@ -1,7 +1,7 @@
 from json import dumps
 from pathlib import Path
 from sqlite3 import Connection, connect
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Optional
 
 from loguru import logger
 from pandas import DataFrame, Index
@@ -16,7 +16,7 @@ class SQLiteConn(FeatureStoreInterface):
     ERR_MISSING_FEATURE_GROUP: ClassVar[str] = "Feature group name must be provided"
     ERR_EMPTY_FEATURES: ClassVar[str] = "Feature group name and features must be provided"
 
-    _instance: "SQLiteConn" | None = None
+    _instance: Optional["SQLiteConn"] = None
     _conn: Connection | None = None
 
     def __new__(cls, *args: Any, **kwargs: Any) -> "SQLiteConn":
