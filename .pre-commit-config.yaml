@@ -1,34 +1,49 @@
+default_language_version:
+    python: python3.11
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
+        exclude: ^(mkdocs\.yml|{{cookiecutter.repo_name}}/mkdocs\.yml)$
       - id: check-case-conflict
       - id: debug-statements
       - id: detect-private-key
       - id: check-merge-conflict
       - id: check-added-large-files
-        args: [--maxkb=100000]  # 100MB
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
+        args: [--maxkb=100000] # 100MB
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.9
+    # Ruff version.
+    rev: v0.11.12
     hooks:
+      # Run the linter
       - id: ruff
-        args: [--fix, --config, .code_quality/ruff.toml]
+        args:
+          - --fix
+          - --config
+          - .code_quality/ruff.toml # Run the formatter.
       - id: ruff-format
+        args:
+          - --config
+          - .code_quality/ruff.toml
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.0
+    rev: v1.16.0
     hooks:
       - id: mypy
-        args: [--config-file=.code_quality/mypy.ini]
-        additional_dependencies:
-          - types-requests
-          - pandas-stubs
-          - types-python-dateutil
-          - types-PyYAML
+        args:
+          - --config-file=.code_quality/mypy.ini
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        exclude: ^(poetry\.lock|\.cruft\.json|.*\.ipynb)$
+      - id: detect-secrets
+        name: 'detect-secrets-jupyter'
+        args: ['--exclude-files', '.*[^i][^p][^y][^n][^b]$', '--exclude-lines', '"(hash|id|image/\w+)":.*', ]
 
 ci:
   autoupdate_schedule: weekly
