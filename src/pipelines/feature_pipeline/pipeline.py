@@ -36,7 +36,7 @@ class FeaturePipelineConfig:
 
     api_token: str
     feature_group: str
-    type: list[str]
+    type: str
     pages: int = 400  # number of pages to read
     timeout: int = 10  # seconds
     HTTP_OKAY: int = 200
