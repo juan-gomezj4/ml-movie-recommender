@@ -30,6 +30,8 @@ class FeaturePipelineConfig:
         ValueError: If provided load type is not in ALLOWED_TYPES.
     """
 
+    ERR_INVALID_TYPE: ClassVar[str] = "Invalid load type: {}. Must be one of: {}"
+
     ALLOWED_TYPES: ClassVar[list[str]] = ["initial", "incremental"]
 
     api_token: str
@@ -42,10 +44,7 @@ class FeaturePipelineConfig:
     def __post_init__(self) -> None:
         """Validate configuration after initialization."""
         if self.type not in self.ALLOWED_TYPES:
-            raise ValueError(
-                f"Invalid load type: {self.type}. "
-                f"Must be one of: {', '.join(self.ALLOWED_TYPES)}"
-            )
+            raise ValueError(self.ERR_INVALID_TYPE.format(self.type, ", ".join(self.ALLOWED_TYPES)))
 
 
 class MovieFeaturePipeline:
@@ -100,5 +99,3 @@ class MovieFeaturePipeline:
             .fetch_movie_extended_info()
             .store_movies_features(feature_store)
         )
-
-        return
