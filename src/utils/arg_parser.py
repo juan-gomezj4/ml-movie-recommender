@@ -18,7 +18,7 @@ class ArgParser:
         parser.add_argument(
             "--pipeline",
             type=str,
-            choices=["feature"],
+            choices=["feature", "train"],
             required=True,
             help="Pipeline to execute (feature)",
         )
