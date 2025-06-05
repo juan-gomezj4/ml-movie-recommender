@@ -9,7 +9,12 @@ requires-python = ">=3.11"
 readme = "README.md"
 
 dependencies = [
+    "loguru>=0.7.3",
+    "pydantic>=2.11.5",
+    "python-dateutil>=2.9.0.post0",
+    "pytz>=2025.2",
     "scikit-learn>=1.6.1",
+    "types-requests>=2.32.0.20250602",
 ]
 
 [project.urls]
@@ -68,3 +73,11 @@ source = ["src/"]
 [tool.coverage.run]
 source = ["src"]
 omit = ["**/__init__.py"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+
+
