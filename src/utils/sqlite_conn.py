@@ -1,4 +1,4 @@
-from json import dumps
+from json import dumps, loads
 from pathlib import Path
 from sqlite3 import Connection, connect
 from typing import Any, ClassVar, Optional
@@ -15,6 +15,11 @@ class SQLiteConn(FeatureStoreInterface):
     ERR_CONN_NOT_INITIALIZED: ClassVar[str] = "Connection not initialized"
     ERR_MISSING_FEATURE_GROUP: ClassVar[str] = "Feature group name must be provided"
     ERR_EMPTY_FEATURES: ClassVar[str] = "Feature group name and features must be provided"
+
+    DESEARIALIZE_COLS: ClassVar[list[str]] = [
+        "genres",
+        "spoken_languages",
+    ]  # this is tech debt
 
     _instance: Optional["SQLiteConn"] = None
     _conn: Connection | None = None
@@ -42,7 +47,27 @@ class SQLiteConn(FeatureStoreInterface):
             df[col] = df[col].apply(lambda x: dumps(x) if isinstance(x, list) else x)
         return df
 
-    def insert(self, feature_group: str, features: DataFrame) -> None:
+    def __deserialize_list_columns(self, features: DataFrame) -> DataFrame:
+        """Deserialize JSON strings back to lists with proper UTF-8 encoding."""
+        df: DataFrame = features.copy()
+        for col in self.DESEARIALIZE_COLS:
+            if col in df.columns:
+                df[col] = df[col].apply(
+                    lambda x: [
+                        bytes(item, "utf-8").decode("utf-8") if isinstance(item, str) else item
+                        for item in loads(x)
+                    ]
+                    if isinstance(x, str)
+                    else x
+                )
+        return df
+
+    def insert(
+        self,
+        feature_group: str,
+        features: DataFrame,
+        mode: Any = "append",  # TODO: Change
+    ) -> None:
         if not feature_group or features.empty:
             raise ValueError(self.ERR_EMPTY_FEATURES)
 
@@ -52,7 +77,7 @@ class SQLiteConn(FeatureStoreInterface):
         features_to_store.to_sql(
             name=feature_group,
             con=self._conn,
-            if_exists="append",
+            if_exists=mode,
             index=False,
         )
 
@@ -69,3 +94,16 @@ class SQLiteConn(FeatureStoreInterface):
             self._conn.execute(query, (feature_group,)).fetchall(), columns=["id"]
         )
         return set(idx["id"].tolist())
+
+    def query_features(self, feature_group: str, columns: list[str] | None = None) -> DataFrame:
+        if not self._conn:
+            raise ValueError(self.ERR_CONN_NOT_INITIALIZED)
+
+        if not feature_group:
+            raise ValueError(self.ERR_MISSING_FEATURE_GROUP)
+
+        logger.info(f"Querying features from {feature_group} with columns {columns}")
+        query: str = f"SELECT {', '.join(columns) if columns else '*'} FROM {feature_group}"  # noqa: S608
+        features: DataFrame = DataFrame(self._conn.execute(query).fetchall(), columns=columns)
+        deserialized_features: DataFrame = self.__deserialize_list_columns(features)
+        return deserialized_features
