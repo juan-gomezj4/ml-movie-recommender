@@ -7,7 +7,7 @@ class FeatureStoreInterface(ABC):
     """Interface for feature store implementations."""
 
     @abstractmethod
-    def insert(self, feature_group: str, features: DataFrame) -> None:
+    def insert(self, feature_group: str, features: DataFrame, mode: str) -> None:
         """Insert features into the store.
 
         Args:
@@ -25,3 +25,6 @@ class FeatureStoreInterface(ABC):
             features: DataFrame containing features to store
         """
         ...
+
+    @abstractmethod
+    def query_features(self, feature_group: str, columns: list[str] | None = None) -> DataFrame: ...
