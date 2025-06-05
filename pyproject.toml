@@ -73,3 +73,11 @@ source = ["src/"]
 [tool.coverage.run]
 source = ["src"]
 omit = ["**/__init__.py"]
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+
+
